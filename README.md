@@ -22,7 +22,7 @@ you can quickly configure your application to operate with a bill validator. Thi
 If you are using Netbeans, simply open the project and satisfy the PTalk.jar dependency. You will then be able to run and debug the application.
 
 ## Questions
-Please [https://github.com/PyramidTechnologies/Java-API-desktop-sample/issues/new).
+Please [let us know](https://github.com/PyramidTechnologies/Java-API-desktop-sample/issues/new).
 
 
 
