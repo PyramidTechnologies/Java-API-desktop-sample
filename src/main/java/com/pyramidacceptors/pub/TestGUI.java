@@ -38,7 +38,7 @@ import javax.swing.JList;
  */
 public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
     
-    private final String REV = "1.0.0.0";
+    private final String REV = "1.1.0.0";
         
     private PyramidAcceptor acceptor;
     private static DefaultListModel data;
@@ -166,7 +166,7 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
         listPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         jScrollPane1.setViewportView(listPanel);
 
-        btnRescan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pyramidacceptors/pub/reload_alt_18x21.png"))); // NOI18N
+        btnRescan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reload_alt_18x21.png"))); // NOI18N
         btnRescan.setToolTipText("Rescan Ports");
         btnRescan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -397,19 +397,58 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
                 this.rdoEscrowed.setSelected(true);
         else if (evt instanceof StackingEvent)
                 this.rdoStacking.setSelected(true);
-        else if (evt instanceof  CreditEvent) {
-            String resp = evt.getFriendlyString();
-            if(!resp.equals(""))
-                data.addElement(resp);
-            int sz = data.size();
-            rawList.ensureIndexIsVisible(sz-1);  
-        }
-           
+        else if (evt instanceof  CreditEvent)
+            addToList(evt.getFriendlyString());
+
         
         // Otherwise it is an event. Log them.
         else {
-            String resp = evt.getFriendlyString();
+            String resp = getEventString(evt);
             Logger.getLogger(TestGUI.class.getName()).log(Level.INFO, String.format("Event: %s", resp));
+            addToList(resp);
         }    
+    }
+
+    private String lastMessage = "";
+    void addToList(String message) {
+
+        // Only add non-empty, non-repeat messages
+        if(message instanceof String &&
+                !message.equals("") &&
+                !lastMessage.equals(message))
+            data.addElement(message);
+        int sz = data.size();
+        rawList.ensureIndexIsVisible(sz-1);
+
+        lastMessage = message;
+    }
+
+    /**
+     * Returns the string name of the event. Due to localization issues
+     * we handle this in the client code and not the core API.
+     * @param evt
+     * @return
+     */
+    private String getEventString(PTalkEvent evt) {
+        if(evt instanceof CasseteMissingEvent)
+            return "Cashbox Removed";
+        if(evt instanceof BillJammedEvent)
+            return "Bill Jam";
+        if(evt instanceof ReturnedEvent)
+            return "Bill Returned";
+        if(evt instanceof BillRejectedEvent)
+            return "Bill Rejected";
+        if(evt instanceof FailureEvent)
+            return "Device Failure";
+        if(evt instanceof PowerUpEvent)
+            return "Powered Up";
+        if(evt instanceof StackedEvent)
+            return "Bill Stacked";
+        if(evt instanceof StackerFullEvent)
+            return "Stacker Full";
+        if(evt instanceof InvalidMessageEvent)
+            return "Invalid Message";
+
+        return "";
     }
 }
