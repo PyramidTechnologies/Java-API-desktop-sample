@@ -1,2 +1,4 @@
-rootProject.name = 'Java-API-desktop-sample'
-
+rootProject.name = 'jPyramid-RS-232'
+include "jPyramid-RS-232"
+project (':jPyramid-RS-232').projectDir = new File(settingsDir, "../jPyramid-RS-232")
+println project(':jPyramid-RS-232').buildFile.absolutePath

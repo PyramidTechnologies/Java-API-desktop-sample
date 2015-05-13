@@ -1,7 +1,21 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
-version = '1.0'
+sourceCompatibility = 1.7
+version = '1.1'
+def release = "release"
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'RS-232 Test Harness',
+                'Implementation-Version': version,
+                'Main-Class': 'com.pyramidacceptors.pub.PTalkTestHarness'
+    }
+    baseName = project.name + "-" + release
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 
 repositories {
     mavenCentral()
@@ -10,5 +24,4 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile project(':jPyramid-RS-232')
-
 }
