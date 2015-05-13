@@ -180,7 +180,7 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
 
         rdoEscrowed.setText("Escrowed");
 
-        rdoStacking.setText("Stacked");
+        rdoStacking.setText("Stacking");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -394,19 +394,17 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
         else if (evt instanceof AcceptingEvent)
             this.rdoAccepting.setSelected(true);
         else if (evt instanceof EscrowedEvent)
-                this.rdoEscrowed.setSelected(true);
+            this.rdoEscrowed.setSelected(true);
         else if (evt instanceof StackingEvent)
-                this.rdoStacking.setSelected(true);
-        else if (evt instanceof  CreditEvent)
+            this.rdoStacking.setSelected(true);
+        else if (evt instanceof CreditEvent)
             addToList(evt.getFriendlyString());
 
-        
-        // Otherwise it is an event. Log them.
-        else {
-            String resp = getEventString(evt);
-            Logger.getLogger(TestGUI.class.getName()).log(Level.INFO, String.format("Event: %s", resp));
-            addToList(resp);
-        }    
+        // Log them all the things
+        String resp = getEventString(evt);
+        Logger.getLogger(TestGUI.class.getName()).log(Level.INFO, String.format("Event: %s", resp));
+        addToList(resp);
+
     }
 
     private String lastMessage = "";
@@ -448,7 +446,18 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
             return "Stacker Full";
         if(evt instanceof InvalidMessageEvent)
             return "Invalid Message";
-
+        if(evt instanceof  CheatedEvent)
+            return "Cheat Detected";
+        if(evt instanceof IdlingEvent)
+            return "Idling";
+        if (evt instanceof AcceptingEvent)
+            return "Accepting";
+        if (evt instanceof EscrowedEvent)
+            return "Escrowed";
+        if (evt instanceof StackingEvent)
+            return "Stacking";
+        if (evt instanceof CreditEvent)
+            return "Credited";
         return "";
     }
 }
