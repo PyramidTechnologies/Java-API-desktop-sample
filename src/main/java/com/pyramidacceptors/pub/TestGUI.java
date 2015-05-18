@@ -38,7 +38,7 @@ import javax.swing.JList;
  */
 public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
     
-    private final String REV = "1.1.0.0";
+    private final String REV = "1.2.0";
         
     private PyramidAcceptor acceptor;
     private static DefaultListModel data;

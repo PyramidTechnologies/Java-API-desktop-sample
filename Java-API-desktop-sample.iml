@@ -15,12 +15,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: org.scream3r:jssc:2.8.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.pyramidacceptors:jPyramid-RS-232:1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.testng:testng:6.9.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.commons:commons-collections4:4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.beanshell:bsh:2.0b4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.beust:jcommander:1.48" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.11" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.pyramidacceptors:jPyramid-RS-232:1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>
 </module>
