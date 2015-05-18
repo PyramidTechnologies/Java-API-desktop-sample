@@ -8,6 +8,7 @@ you can quickly configure your application to operate with a bill validator. Thi
 ## Requirements
 
 1. A supported bill validator
+   - Spectra
    - Apex 7000
    - Apex 5000
    - Trilogy *requires RS-232 firmware*
