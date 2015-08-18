@@ -9,6 +9,8 @@ This is provided as both a Netbeans and Intellij project.
 
 ## Requirements
 
+If you are using an Apex 7000 or a Spectra, please ensure that all dip switches are in the off position.
+
 1. A supported bill validator
    - Spectra
    - Apex 7000
@@ -24,6 +26,11 @@ This is provided as both a Netbeans and Intellij project.
 If you are using Netbeans, simply open the project and satisfy the PTalk.jar dependency. You will then be able to run and debug the application.
 
 If you are using Intellij, the project should import and handle all of the depency stuff for you via gradle.
+
+## Notes for Linux users running Java 8
+We have had mixed reports of this application not finding all available ports. The fix seems to be to run the app from terminal using the -jar switch
+
+    java -jar your_app.jar
 
 ## Dependencies
 If you prefer to handle your own depencies, here is what you will need
