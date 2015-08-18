@@ -6,11 +6,10 @@ you can quickly configure your application to operate with a bill validator. Thi
   
 This is provided as both a Netbeans and Intellij project.
   
+## Important
+If youa re using an Apex 7000 or Spectra, please make sure that all of your dip switches are in the off position. The unit msust be in RS-232 mode to use this library. For more information about configuration, please see our [faq](http://pyramidacceptors.com/support/faq/).  
 
 ## Requirements
-
-If you are using an Apex 7000 or a Spectra, please ensure that all dip switches are in the off position.
-
 1. A supported bill validator
    - Spectra
    - Apex 7000
