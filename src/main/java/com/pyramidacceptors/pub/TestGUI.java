@@ -180,7 +180,7 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
 
         rdoEscrowed.setText("Escrowed");
 
-        rdoStacking.setText("Stacking");
+        rdoStacking.setText("Stacked");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -328,7 +328,7 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
             } catch (PyramidDeviceException ex) {
                 Logger.getLogger(TestGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-       
+         
         }
     }//GEN-LAST:event_btnConnectMouseClicked
 
