@@ -29,8 +29,11 @@ If you are using Intellij, the project should import and handle all of the depen
 If you prefer to handle your own depencies, here is what you will need
 
  1. The ptalk.jar file from this project (which itself include its bundled dependencies)
+ 2. (log4j12-1.7.12)[http://mvnrepository.com/artifact/log4j/log4j/1.2.17]
  2. (Already in PTalk) jSSC latest
  3. (Already in PTalk) Apache commons-collection 4.4+
+ 
+ __Please note that you may omit logging or swap out log4j for another framework.__
 
 ## Questions
 Please [let us know](https://github.com/PyramidTechnologies/Java-API-desktop-sample/issues/new).

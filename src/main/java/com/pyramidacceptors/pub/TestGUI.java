@@ -25,20 +25,20 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Cory Todd <cory@pyramidacceptors.com>
  */
 public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
-    
-    private final String REV = "1.2.0";
+    private Logger logger = Logger.getLogger(TestGUI.class.getName());
+
+    private final String REV = "1.2.1";
         
     private PyramidAcceptor acceptor;
     private static DefaultListModel data;
@@ -325,8 +325,8 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
                             String.format("Failed to connect port %s",
                                     acceptor.getPortName()));
                 }
-            } catch (PyramidDeviceException ex) {
-                Logger.getLogger(TestGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (PyramidDeviceException ex) {                
+                logger.error("Failure opening port: {}", ex);
             }
          
         }
@@ -402,7 +402,7 @@ public class TestGUI extends javax.swing.JFrame implements PTalkEventListener {
 
         // Log them all the things
         String resp = getEventString(evt);
-        Logger.getLogger(TestGUI.class.getName()).log(Level.INFO, String.format("Event: %s", resp));
+        logger.info(String.format("Event: %s", resp));
         addToList(resp);
 
     }
