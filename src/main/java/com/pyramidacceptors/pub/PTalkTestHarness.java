@@ -22,7 +22,7 @@ package com.pyramidacceptors.pub;
  */
 public class PTalkTestHarness implements Runnable {
 
-    private TestGUI gui;
+    private NewTestUI gui;
     /**
      * @param args the command line arguments
      */
@@ -33,6 +33,6 @@ public class PTalkTestHarness implements Runnable {
 
     @Override
     public void run() {
-        gui = new TestGUI();
+        gui = new NewTestUI();
     }    
 }
