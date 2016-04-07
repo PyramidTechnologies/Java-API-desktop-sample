@@ -8,19 +8,19 @@ import com.pyramidacceptors.ptalk.api.event.Events;
 import com.pyramidacceptors.ptalk.api.event.PTalkEvent;
 import com.pyramidacceptors.ptalk.api.event.PTalkEventListener;
 import com.pyramidacceptors.ptalk.api.event.SerialDataEvent;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
 
 /**
  * Created by cory on 4/6/2016.
  */
 public class NewTestUI implements PTalkEventListener {
 
-    private Logger logger = Logger.getLogger(NewTestUI.class.getName());
+    private static final Logger logger = Logger.getLogger(NewTestUI.class.getName());
 
     private JPanel panel1;
     private JComboBox cmbPorts;
@@ -43,9 +43,12 @@ public class NewTestUI implements PTalkEventListener {
     private JRadioButton rdoReturning;
     private JRadioButton rdoIdle;
     private JRadioButton rdoBillJammed;
-    private JRadioButton btnRejected;
+    private JRadioButton rdoRejected;
     private JRadioButton rdoFailure;
     private JRadioButton rdoCashbox;
+    private JLabel lblModel;
+    private JLabel lblRevision;
+    private JLabel lblSerialnumber;
 
     private DefaultListModel rxListModel;
     private DefaultListModel txListModel;
@@ -70,8 +73,31 @@ public class NewTestUI implements PTalkEventListener {
                 (int) (dim.getHeight() / 2 - y));
         frame.setLocation(pt);
 
+        setupListeners();
+
+
+        // Populate available OS serial ports
+        for(String port : PyramidPort.getPortList())
+            cmbPorts.addItem(port);
+
+
+        // Bind our debugging view to models that are filled when
+        // we receive the serialdataevent
+        rxListModel = new DefaultListModel();
+        txListModel = new DefaultListModel();
+        lstTx.setModel(txListModel);
+        lstRx.setModel(rxListModel);
+        lstRx.setCellRenderer(new AlternatingRowColors());
+        lstTx.setCellRenderer(new AlternatingRowColors());
+
+
         frame.setVisible(true);
 
+        logger.info("Sample app successfully launched");
+
+    }
+
+    private void setupListeners() {
         btnConnect.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnConnectMouseClicked(evt);
@@ -90,20 +116,11 @@ public class NewTestUI implements PTalkEventListener {
             }
         });
 
-        // Populate available OS serial ports
-        for(String port : PyramidPort.getPortList())
-            cmbPorts.addItem(port);
-
-
-        // Bind our debugging view to models that are filled when
-        // we receive the serialdataevent
-        rxListModel = new DefaultListModel();
-        txListModel = new DefaultListModel();
-        lstTx.setModel(txListModel);
-        lstRx.setModel(rxListModel);
-        lstRx.setCellRenderer(new AlternatingRowColors());
-        lstTx.setCellRenderer(new AlternatingRowColors());
-
+        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetMouseClicked(evt);
+            }
+        });
     }
 
     private void setConnected(boolean connected) {
@@ -112,6 +129,7 @@ public class NewTestUI implements PTalkEventListener {
         this.cmbPorts.setEnabled(!connected);
         this.btnConnect.setText(connected ? "Disconnect" : "Connect");
         this.btnPause.setEnabled(connected);
+        this.btnReset.setSelected(connected);
         this.lblConnected.setText(connected ? "Connected" : "Not Connected");
 
         if(connected) {
@@ -136,6 +154,10 @@ public class NewTestUI implements PTalkEventListener {
 
         isPaused = !isPaused;
 
+    }
+
+    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {
+        mAcceptor.requestReset();
     }
 
     private void btnClearMouseClicked(java.awt.event.MouseEvent evt) {
@@ -171,7 +193,12 @@ public class NewTestUI implements PTalkEventListener {
                         "Check that you selected the correct port");
                 setConnected(false);
             } else {
+
                 setConnected(true);
+
+                lblModel.setText(mAcceptor.getAcceptorModel().toString());
+                lblRevision.setText(mAcceptor.getFirmwareRevision());
+                lblSerialnumber.setText(mAcceptor.getSerialNumber());
             }
 
         } else {
@@ -192,6 +219,8 @@ public class NewTestUI implements PTalkEventListener {
 
         if(evt.getId() == Events.SerialData) {
             debuggerViewSafeAdd((SerialDataEvent)evt);
+        } else {
+            setEventState(evt);
         }
 
     }
@@ -214,4 +243,35 @@ public class NewTestUI implements PTalkEventListener {
                 this.txListModel.remove(499);
         }
     }
+
+    private void setEventState(PTalkEvent e) {
+        switch (e.getId()) {
+            case Idling:
+                rdoIdle.setSelected(true);
+                break;
+            case Accepting:
+                rdoAccepting.setSelected(true);
+                break;
+            case Escrowed:
+                rdoEscrowed.setSelected(true);
+                break;
+            case Stacking:
+                rdoStacking.setSelected(true);
+                break;
+            case Stacked:
+                rdoStacked.setSelected(true);
+                break;
+        }
+
+        rdoReturning.setSelected(e.getId() == Events.Returning);
+        rdoReturned.setSelected(e.getId() == Events.Returned);
+        rdoFailure.setSelected(e.getId() == Events.Failure);
+        rdoRejected.setSelected(e.getId() == Events.BillRejected);
+        rdoStackerFull.setSelected(e.getId() == Events.StackerFull);
+        rdoBillJammed.setSelected(e.getId() == Events.BillJammed);
+        rdoCheated.setSelected(e.getId() == Events.Cheated);
+        rdoCashbox.setSelected(e.getId() == Events.BillCasetteRemoved);
+
+    }
+
 }
