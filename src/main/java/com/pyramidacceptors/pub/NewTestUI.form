@@ -159,54 +159,12 @@
           </component>
         </children>
       </grid>
-      <component id="ca013" class="javax.swing.JList" binding="lstTx">
-        <constraints>
-          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="300" height="500"/>
-            <preferred-size width="300" height="500"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="31f20" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Master"/>
-        </properties>
-      </component>
       <component id="7fc6d" class="javax.swing.JButton" binding="btnClear">
         <constraints>
-          <grid row="1" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Clear Messages"/>
-        </properties>
-      </component>
-      <component id="65c99" class="javax.swing.JList" binding="lstRx">
-        <constraints>
-          <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="300" height="500"/>
-            <preferred-size width="300" height="500"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="9efb6" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Slave"/>
-        </properties>
-      </component>
-      <component id="df202" class="javax.swing.JLabel" binding="lblConnected">
-        <constraints>
-          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Not Connected"/>
         </properties>
       </component>
       <component id="b11e7" class="javax.swing.JButton" binding="btnAccept">
@@ -249,14 +207,6 @@
         </constraints>
         <properties>
           <text value="Pause"/>
-        </properties>
-      </component>
-      <component id="b11e6" class="javax.swing.JButton" binding="btnReset">
-        <constraints>
-          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Reset Bill Acceptor"/>
         </properties>
       </component>
       <grid id="95d6d" layout-manager="GridLayoutManager" row-count="1" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -317,6 +267,64 @@
           </component>
         </children>
       </grid>
+      <component id="a4676" class="javax.swing.JButton" binding="btnReadInfo">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Read Info"/>
+        </properties>
+      </component>
+      <component id="ca013" class="javax.swing.JList" binding="lstTx">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="300" height="500"/>
+            <preferred-size width="300" height="500"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="31f20" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Master"/>
+        </properties>
+      </component>
+      <component id="b11e6" class="javax.swing.JButton" binding="btnReset">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Reset Bill Acceptor"/>
+        </properties>
+      </component>
+      <component id="9efb6" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Slave"/>
+        </properties>
+      </component>
+      <component id="65c99" class="javax.swing.JList" binding="lstRx">
+        <constraints>
+          <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="300" height="500"/>
+            <preferred-size width="300" height="500"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="df202" class="javax.swing.JLabel" binding="lblConnected">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Not Connected"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>

@@ -49,6 +49,7 @@ public class NewTestUI implements PTalkEventListener {
     private JLabel lblModel;
     private JLabel lblRevision;
     private JLabel lblSerialnumber;
+    private JButton btnReadInfo;
 
     private DefaultListModel rxListModel;
     private DefaultListModel txListModel;
@@ -62,19 +63,7 @@ public class NewTestUI implements PTalkEventListener {
         JFrame frame = new JFrame("jRS232 Sample");
         frame.add(panel1);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        frame.pack();
-
-        // Center the JFrame
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = frame.getWidth();
-        int y = frame.getHeight() / 2;
-        Point pt = new Point((int) (dim.getWidth() / 2 - x),
-                (int) (dim.getHeight() / 2 - y));
-        frame.setLocation(pt);
-
         setupListeners();
-
 
         // Populate available OS serial ports
         for(String port : PyramidPort.getPortList())
@@ -91,8 +80,20 @@ public class NewTestUI implements PTalkEventListener {
         lstTx.setCellRenderer(new AlternatingRowColors());
 
 
-        frame.setVisible(true);
+        frame.pack();
 
+        // Center the JFrame
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = frame.getWidth();
+        int y = frame.getHeight() / 2;
+        Point pt = new Point((int) (dim.getWidth() / 2 - x),
+                (int) (dim.getHeight() / 2 - y));
+        frame.setLocation(pt);
+
+        // Disable everything that is a an acceptor command
+        setConnected(false);
+
+        frame.setVisible(true);
         logger.info("Sample app successfully launched");
 
     }
@@ -121,15 +122,28 @@ public class NewTestUI implements PTalkEventListener {
                 btnResetMouseClicked(evt);
             }
         });
+
+        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetMouseClicked(evt);
+            }
+        });
+
+        btnReadInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReadInfoMouseClicked(evt);
+            }
+        });
     }
 
     private void setConnected(boolean connected) {
 
         // Cannot change port when connect
         this.cmbPorts.setEnabled(!connected);
-        this.btnConnect.setText(connected ? "Disconnect" : "Connect");
         this.btnPause.setEnabled(connected);
-        this.btnReset.setSelected(connected);
+        this.btnReset.setEnabled(connected);
+        this.btnReadInfo.setEnabled(connected);
+        this.btnConnect.setText(connected ? "Disconnect" : "Connect");
         this.lblConnected.setText(connected ? "Connected" : "Not Connected");
 
         if(connected) {
@@ -137,6 +151,14 @@ public class NewTestUI implements PTalkEventListener {
             this.lstTx.clearSelection();
         }
 
+    }
+
+    private void btnReadInfoMouseClicked(java.awt.event.MouseEvent evt) {
+        lblModel.setText(mAcceptor.getAcceptorModel());
+        lblRevision.setText(mAcceptor.getFirmwareRevision());
+
+        mAcceptor.requestSerialNumber();
+        lblSerialnumber.setText(mAcceptor.getSerialNumber());
     }
 
     static boolean isPaused = false;
