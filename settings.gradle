@@ -1,1 +1,3 @@
 rootProject.name = 'Java-API-desktop-sample'
+include ':jPyramidRS-232'
+project(':jPyramidRS-232').projectDir = new File('../jPyramid-RS-232')
