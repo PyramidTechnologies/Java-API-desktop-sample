@@ -1,9 +1,6 @@
 package com.pyramidacceptors.pub;
 
-import com.pyramidacceptors.ptalk.api.MessageType;
-import com.pyramidacceptors.ptalk.api.PyramidAcceptor;
-import com.pyramidacceptors.ptalk.api.PyramidDeviceException;
-import com.pyramidacceptors.ptalk.api.PyramidPort;
+import com.pyramidacceptors.ptalk.api.*;
 import com.pyramidacceptors.ptalk.api.event.Events;
 import com.pyramidacceptors.ptalk.api.event.PTalkEvent;
 import com.pyramidacceptors.ptalk.api.event.PTalkEventListener;
@@ -12,6 +9,8 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,6 +49,7 @@ public class NewTestUI implements PTalkEventListener {
     private JLabel lblRevision;
     private JLabel lblSerialnumber;
     private JButton btnReadInfo;
+    private JCheckBox chkEnableLogging;
 
     private DefaultListModel rxListModel;
     private DefaultListModel txListModel;
@@ -79,21 +79,13 @@ public class NewTestUI implements PTalkEventListener {
         lstRx.setCellRenderer(new AlternatingRowColors());
         lstTx.setCellRenderer(new AlternatingRowColors());
 
-
-        frame.pack();
-
-        // Center the JFrame
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = frame.getWidth();
-        int y = frame.getHeight() / 2;
-        Point pt = new Point((int) (dim.getWidth() / 2 - x),
-                (int) (dim.getHeight() / 2 - y));
-        frame.setLocation(pt);
-
         // Disable everything that is a an acceptor command
         setConnected(false);
 
+        frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
         logger.info("Sample app successfully launched");
 
     }
@@ -134,6 +126,13 @@ public class NewTestUI implements PTalkEventListener {
                 btnReadInfoMouseClicked(evt);
             }
         });
+
+        chkEnableLogging.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                chkDebugMonitorChanged(e);
+            }
+        });
     }
 
     private void setConnected(boolean connected) {
@@ -151,6 +150,14 @@ public class NewTestUI implements PTalkEventListener {
             this.lstTx.clearSelection();
         }
 
+    }
+
+    private void chkDebugMonitorChanged(ItemEvent e) {
+        if(e.getStateChange() == ItemEvent.SELECTED) {
+            RS232Configuration.INSTANCE.setEventMask(RS232Configuration.DEFAULT_EVENT_MASK | Events.SerialData.getIntId());
+        } else {
+            RS232Configuration.INSTANCE.setEventMask(RS232Configuration.DEFAULT_EVENT_MASK & ~(Events.SerialData.getIntId()));
+        }
     }
 
     private void btnReadInfoMouseClicked(java.awt.event.MouseEvent evt) {
@@ -185,6 +192,10 @@ public class NewTestUI implements PTalkEventListener {
     private void btnClearMouseClicked(java.awt.event.MouseEvent evt) {
         txListModel.clear();
         rxListModel.clear();
+
+        lblRevision.setText("");
+        lblSerialnumber.setText("");
+        lblModel.setText("");
     }
 
     private void btnConnectMouseClicked(java.awt.event.MouseEvent evt) {
@@ -240,7 +251,13 @@ public class NewTestUI implements PTalkEventListener {
     public void changeEventReceived(PTalkEvent evt) {
 
         if(evt.getId() == Events.SerialData) {
-            debuggerViewSafeAdd((SerialDataEvent)evt);
+            debuggerViewSafeAdd((SerialDataEvent) evt);
+        } else if(evt.getId() == Events.CommunicationFailure) {
+
+            logger.error("Acceptor is no longer responding!");
+            lblConnected.setText("Dead!!");
+            lblConnected.setBackground(Color.RED);
+
         } else {
             setEventState(evt);
         }
