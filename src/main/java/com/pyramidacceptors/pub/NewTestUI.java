@@ -1,10 +1,7 @@
 package com.pyramidacceptors.pub;
 
 import com.pyramidacceptors.ptalk.api.*;
-import com.pyramidacceptors.ptalk.api.event.Events;
-import com.pyramidacceptors.ptalk.api.event.PTalkEvent;
-import com.pyramidacceptors.ptalk.api.event.PTalkEventListener;
-import com.pyramidacceptors.ptalk.api.event.SerialDataEvent;
+import com.pyramidacceptors.ptalk.api.event.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -81,6 +78,9 @@ public class NewTestUI implements PTalkEventListener {
 
         // Disable everything that is a an acceptor command
         setConnected(false);
+
+        // Start with logging enabled
+        chkEnableLogging.setSelected(true);
 
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -253,11 +253,14 @@ public class NewTestUI implements PTalkEventListener {
         if(evt.getId() == Events.SerialData) {
             debuggerViewSafeAdd((SerialDataEvent) evt);
         } else if(evt.getId() == Events.CommunicationFailure) {
+            ConnectionFailureEvent c = (ConnectionFailureEvent)evt;
+            JOptionPane.showMessageDialog(panel1,
+                    String.format("Acceptor is no longer responding! Count: %d", c.getFailureCount()));
 
-            logger.error("Acceptor is no longer responding!");
-            lblConnected.setText("Dead!!");
-            lblConnected.setBackground(Color.RED);
-
+            logger.error(String.format("Acceptor is no longer responding! Count: %d",c.getFailureCount()));
+        } else if (evt.getId() == Events.Credit) {
+            JOptionPane.showMessageDialog(panel1, "Credit received! " +
+                    ((CreditEvent)evt).getBillName().name());
         } else {
             setEventState(evt);
         }
@@ -274,12 +277,12 @@ public class NewTestUI implements PTalkEventListener {
 
         if(e.messageType == MessageType.Slave) {
             this.rxListModel.add(0, message);
-            if(this.rxListModel.size() > 500)
-                this.rxListModel.remove(499);
+            if(this.rxListModel.size() > 499)
+                this.rxListModel.remove(498);
         } else {
             this.txListModel.add(0, message);
-            if(this.txListModel.size() > 500)
-                this.txListModel.remove(499);
+            if(this.txListModel.size() > 499)
+                this.txListModel.remove(498);
         }
     }
 
