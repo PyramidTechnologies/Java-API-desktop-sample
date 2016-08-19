@@ -25,6 +25,7 @@ If youa re using an Apex 7000 or Spectra, please make sure that all of your dip 
 If you are using Netbeans, simply open the project and satisfy the PTalk.jar dependency. You will then be able to run and debug the application.
 
 If you are using Intellij, the project should import and handle all of the depency stuff for you via gradle.
+NOTE: When exporting the JAR, you must have the forms_rt.jar on your classpath!
 
 ## Notes for Linux users running Java 8
 We have had mixed reports of this application not finding all available ports. The fix seems to be to run the app from terminal using the -jar switch
