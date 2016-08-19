@@ -5,7 +5,6 @@ import com.pyramidacceptors.ptalk.api.event.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
@@ -254,8 +253,20 @@ public class NewTestUI implements PTalkEventListener {
             debuggerViewSafeAdd((SerialDataEvent) evt);
         } else if(evt.getId() == Events.CommunicationFailure) {
             ConnectionFailureEvent c = (ConnectionFailureEvent)evt;
-            JOptionPane.showMessageDialog(panel1,
-                    String.format("Acceptor is no longer responding! Count: %d", c.getFailureCount()));
+
+            Object[] options = { "Yes", "No" };
+            int selectedValue = JOptionPane.showOptionDialog(
+                    panel1,
+                    String.format("Acceptor is no longer responding!\nDisconnect?", c.getFailureCount()),
+                    "Warning",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+            if(selectedValue == 0) {
+                // yes, ugly I know
+                btnConnectMouseClicked(null);
+            }
+
 
             logger.error(String.format("Acceptor is no longer responding! Count: %d",c.getFailureCount()));
         } else if (evt.getId() == Events.Credit) {
@@ -315,5 +326,4 @@ public class NewTestUI implements PTalkEventListener {
         rdoCashbox.setSelected(e.getId() == Events.BillCasetteRemoved);
 
     }
-
 }
