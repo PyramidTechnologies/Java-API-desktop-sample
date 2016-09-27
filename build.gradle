@@ -19,6 +19,7 @@ task fatJar(type: Jar) {
 
 repositories {
     mavenCentral()
+    flatDir dirs: "${rootDir}/lib"
 }
 
 dependencies {
@@ -29,5 +30,6 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-library:1.2.1'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7+'
     compile project(':jPyramidRS-232')
+    compile name: 'forms_rt', version: '13.1.1'
 
 }

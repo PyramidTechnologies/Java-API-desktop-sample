@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 X-COMMENT: Main-Class will be added automatically by build
+Class-Path: lib/jssc-2.8.0.jar lib/forms_rt.jar
 Main-Class: com.pyramidacceptors.pub.PTalkTestHarness
 

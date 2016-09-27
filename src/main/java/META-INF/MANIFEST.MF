@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: Java Desktop Sample
 Implementation-Version: 0.1.0
-Class-Path: lib/jssc-2.8.0.jar
+Class-Path: lib/jssc-2.8.0.jar lib/forms_rt.jar
 Main-Class: com.pyramidacceptors.pub.PTalkTestHarness
 
